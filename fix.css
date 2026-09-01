@@ -1,0 +1,585 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* =========================================================
+   1. GLOBAL RESETS & BASE STYLES
+   ========================================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s linear;
+  font-family: 'Roboto', sans-serif;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #0e0e0e;
+  color: #ededed;
+  overflow-x: hidden;
+}
+
+/* Custom Red Scrollbar */
+::-webkit-scrollbar {
+  width: 0.8rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e0e0e;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fb0339;
+  border-radius: 0.5rem;
+}
+
+/* =========================================================
+   SIDEBAR REDESIGN (fixes.css)
+   ========================================================= */
+
+/* Dark Backdrop Overlay */
+.side-bar {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(8px) !important; /* Glass effect */
+  display: flex !important;
+  justify-content: flex-start !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease !important;
+  z-index: 5000 !important;
+}
+
+/* Open State */
+.side-bar.active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Sliding Menu Panel */
+.side-bar .navbar {
+  width: 300px !important;
+  max-width: 80vw !important;
+  height: 100% !important;
+  background: #121212 !important;
+  border-right: 2px solid #fb0339 !important;
+  padding: 2.5rem 2rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.2rem !important;
+  box-shadow: 10px 0 25px rgba(251, 3, 57, 0.15) !important;
+  transform: translateX(-100%) !important;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  overflow-y: auto !important;
+}
+
+/* Slide Panel In when active */
+.side-bar.active .navbar {
+  transform: translateX(0) !important;
+}
+
+/* Close Button */
+.side-bar #close-btn {
+  align-self: flex-end !important;
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.8rem !important;
+  color: #ededed !important;
+  background: #1e1e1e !important;
+  border: 1px solid #333 !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  margin-bottom: 1rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.side-bar #close-btn:hover {
+  background: #fb0339 !important;
+  color: #0e0e0e !important;
+  transform: rotate(90deg) !important;
+}
+
+/* Sidebar Title Header */
+.side-bar .navbar .title {
+  font-size: 1.8rem !important;
+  font-weight: 700 !important;
+  color: #fb0339 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  padding-bottom: 1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Navigation Links */
+.side-bar .navbar a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.5rem !important;
+  font-size: 1.6rem !important;
+  font-weight: 500 !important;
+  color: #ededed !important;
+  padding: 1.2rem 1.5rem !important;
+  border-radius: 0.8rem !important;
+  background: transparent !important;
+  transition: all 0.25s ease !important;
+}
+
+.side-bar .navbar a i {
+  font-size: 1.8rem !important;
+  color: #fb0339 !important;
+  transition: transform 0.2s ease !important;
+}
+
+/* Hover & Active Link Styling */
+.side-bar .navbar a:hover {
+  background: rgba(251, 3, 57, 0.15) !important;
+  color: #fb0339 !important;
+  padding-left: 2rem !important; /* Subtle slide effect */
+}
+
+.side-bar .navbar a:hover i {
+  transform: scale(1.15) !important;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Common Buttons */
+.btn, .btm {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #ededed;
+  background-color: #fb0339;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+}
+
+.btn:hover, .btm:hover {
+  background-color: #ffffff;
+  color: #0e0e0e;
+}
+
+/* =========================================================
+   2. HEADER & NAVIGATION
+   ========================================================= */
+header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0e0e0e;
+  padding: 1.5rem 7%;
+  border-bottom: 0.1rem solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.logo #menu-btn {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ededed;
+}
+
+.logo #menu-btn:hover {
+  color: #fb0339;
+}
+
+.logo a {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fb0339;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.navigation {
+  display: flex;
+  gap: 1rem;
+}
+
+.navigation a {
+  font-size: 1.6rem;
+  color: #ededed;
+  padding: 0.6rem 1.4rem;
+  border-radius: 2rem;
+}
+
+.navigation a:hover {
+  background-color: #fb0339;
+  color: #0e0e0e;
+}
+
+.search {
+  width: 22rem;
+  height: 4rem;
+  border: 0.15rem solid #333;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.search:focus-within {
+  border-color: #fb0339;
+}
+
+.search input {
+  width: 100%;
+  background: transparent;
+  color: #ededed;
+  font-size: 1.4rem;
+  padding-left: 0.5rem;
+}
+
+.search button {
+  background: transparent;
+  color: #ededed;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.search button:hover {
+  color: #fb0339;
+}
+
+.login a {
+  font-size: 2.5rem;
+  color: #ededed;
+}
+
+.login a:hover {
+  color: #fb0339;
+}
+
+/* =========================================================
+   3. HERO SECTION (.home)
+   ========================================================= */
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 6rem 7%;
+  min-height: 80vh;
+}
+
+.home-content {
+  flex: 1 1 45rem;
+}
+
+.home-content h1 {
+  font-size: clamp(3rem, 4vw, 4.8rem);
+  color: #ededed;
+  line-height: 1.1;
+}
+
+.home-content h1:nth-child(2) {
+  color: #fb0339;
+}
+
+.home-content p {
+  font-size: 1.5rem;
+  color: #aaa;
+  line-height: 1.8;
+  margin: 2rem 0;
+}
+
+.home-content .btn-box {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.home-content .sign-in p {
+  font-size: 1.4rem;
+  color: #888;
+}
+
+.home-content .sign-in .btm {
+  margin-top: 0;
+  margin-left: 0.5rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 1.3rem;
+}
+
+.home-img {
+  flex: 1 1 40rem;
+  display: flex;
+  justify-content: center;
+}
+
+.home-img img {
+  border-radius: 1rem;
+  border: 2px solid #222;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
+}
+
+/* =========================================================
+   4. FULL-WIDTH BANNER TAGS (.tag & .tag2)
+   ========================================================= */
+.tag, .tag2 {
+  background: linear-gradient(135deg, #180307 0%, #0e0e0e 100%);
+  border-top: 2px solid #fb0339;
+  border-bottom: 2px solid #fb0339;
+  padding: 4rem 7%;
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.tag-content h2, .tag2-content h2 {
+  font-size: 2.8rem;
+  color: #fb0339;
+  margin-bottom: 1rem;
+}
+
+.tag-content p, .tag2-content p {
+  font-size: 1.6rem;
+  color: #ccc;
+  line-height: 1.6;
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   5. ESSAY SECTION (.essay)
+   ========================================================= */
+.essay {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 5rem 7%;
+  background-color: #121212;
+}
+
+.essay-content {
+  flex: 1 1 45rem;
+}
+
+.essay-content h2 {
+  font-size: 3rem;
+  color: #ededed;
+  margin-bottom: 1.5rem;
+}
+
+.essay-content li {
+  font-size: 1.5rem;
+  color: #bbb;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  list-style-position: inside;
+}
+
+.essay-content p {
+  font-size: 1.4rem;
+  color: #fb0339;
+  font-weight: 500;
+  margin-top: 1.5rem;
+}
+
+.essay-img {
+  flex: 1 1 40rem;
+}
+
+.essay-img img {
+  border-radius: 0.8rem;
+}
+
+/* =========================================================
+   6. NEWS ARTICLE CARDS (.built & .books)
+   ========================================================= */
+.built, .books {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+  padding: 5rem 7%;
+  border-bottom: 0.1rem solid #1e1e1e;
+}
+
+.books {
+  background-color: #111;
+}
+
+.built-content, .books-content {
+  flex: 1 1 50rem;
+}
+
+.built-content h2, .books-content h2 {
+  font-size: 2.6rem;
+  color: #ededed;
+  margin-bottom: 1.5rem;
+}
+
+.built-content p, .books-content p {
+  font-size: 1.5rem;
+  color: #aaa;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.built-img, .books-img {
+  flex: 1 1 35rem;
+}
+
+.built-img img, .books-img img {
+  border-radius: 0.8rem;
+  width: 100%;
+  object-fit: cover;
+  max-height: 30rem;
+}
+
+/* Fix nested image inside .books-content in HTML */
+.books-content .books-img {
+  margin-top: 2rem;
+}
+
+/* =========================================================
+   7. FOOTER SECTION (.footer)
+   ========================================================= */
+.footer {
+  background-color: #070707;
+  padding: 5rem 7% 3rem;
+  border-top: 0.1rem solid #222;
+}
+
+.footer .headings {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 2rem;
+  border-bottom: 0.1rem solid #222;
+}
+
+.footer .headings h3 {
+  font-size: 2.4rem;
+  color: #fb0339;
+}
+
+.footer .headings h4 {
+  font-size: 1.6rem;
+  color: #ededed;
+}
+
+.footer .share {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer .share a {
+  font-size: 2rem;
+  color: #ededed;
+}
+
+.footer .share a:hover {
+  color: #fb0339;
+  transform: translateY(-3px);
+}
+
+.list-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap: 3rem;
+  padding-top: 3rem;
+}
+
+.list span li {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fb0339;
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.list li {
+  font-size: 1.4rem;
+  color: #aaa;
+  list-style: none;
+  margin-bottom: 0.8rem;
+}
+
+.list li:hover {
+  color: #ededed;
+  cursor: pointer;
+}
+
+/* =========================================================
+   8. RESPONSIVE MEDIA QUERIES
+   ========================================================= */
+@media (max-width: 991px) {
+  html {
+    font-size: 55%;
+  }
+
+  .home, .essay, .built, .books {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .home-content .btn-box {
+    justify-content: center;
+  }
+
+  .essay-img, .built-img, .books-img, .home-img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .navigation {
+    display: none; /* Can be toggled with JavaScript */
+  }
+
+  .search {
+    order: 3;
+    width: 100%;
+  }
+
+  .footer .headings {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 50%;
+  }
+}
